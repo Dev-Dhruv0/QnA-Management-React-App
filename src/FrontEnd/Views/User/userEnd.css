@@ -1,72 +1,143 @@
+/* General Body Styling */
 body {
-    /* background: linear-gradient(to right, #f0f4f8, #d9e2ec); */
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f7fa; /* Light background */
 }
 
+/* Container for the entire User Interface */
 .user-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height:90vh;
+    min-height: 90vh;
     text-align: center;   
-}
-
-h2 {
-    color: #3344155;
-    margin-bottom: 20px;
-}
-
-.Qna-container {
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
     padding: 20px;
-    max-width: 600px;
-    width: 100%; 
 }
 
-.question-block {
+/* Title Styling */
+h2 {
+    color: #2c3e50; /* Dark color for title */
     margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+/* Container for Questions and Options */
+.Qna-container {
+    background-color: rgba(255, 255, 255, 0.3); /* Keep transparent background */
+    backdrop-filter: blur(10px); /* Keep blurred effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 10px; /* Slight rounding for a soft feel */
+    padding: 30px;
+    max-width: 700px;
+    width: 100%;
+}
+
+/* Question Block Styling */
+.question-block {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Light border to separate questions */
 }
 
 h3 {
-    font-size: 1.5rem;
-    color: #2c3e50;
+    font-size: 1.8rem; /* Large text for questions */
+    color: #1a1a2e; /* Dark text for contrast */
+    margin-bottom: 10px;
 }
 
+/* Option Block Styling */
 .option-block {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    gap: 15px; /* Spacing between options */
+    margin-bottom: 30px;
 }
 
-input[type="radio"] {
-    margin-right: 20px;
+.option-block div {
+    display: flex;
+    align-items: center;
+    /* justify-content: flex-start; */
 }
 
+/* Styled Option Labels */
 label {
     font-size: 1.1rem;
     color: #34495e;
+    background-color: rgba(255, 255, 255, 0.2); /* Light background for options */
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    margin-left: 10px;
+    text-align: left;
 }
 
+/* Radio Button Styling */
+input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2); 
+}
+
+/* Option Hover Effect */
+label:hover {
+    background-color: rgba(255, 255, 255, 0.4); /* Slightly darker on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Light shadow on hover */
+}
+
+/* Active Option Styling */
+input[type="radio"]:checked + label {
+    background-color: rgba(255, 255, 255, 0.6); 
+    border: 2px solid #4CAF50; 
+}
+
+/* Button Styling */
 button {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Action button color */
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
+/* Button Hover Effect */
 button:hover {
-    /* background-color: #45a049; */
+    background-color: #45a049;
 }
 
+/* Error Message Styling */
 p {
-    color: #e74c3c;
+    color: #e74c3c; /* Red for error messages */
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .Qna-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    button {
+        width: 100%;
+        font-size: 1rem;
+    }
 }

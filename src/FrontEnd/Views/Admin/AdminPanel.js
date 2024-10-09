@@ -157,17 +157,17 @@ const AdminPanel = () => {
     e.preventDefault();
 
     // Check for unsaved items or empty fields
-    // const unsavedOrEmptyItems = questionInput.some(
-    //   (question) =>
-    //     question.isEditing || // Check if any question is still in editing mode
-    //     !question.question || // Check if question is empty
-    //     question.options.some((option) => option.isEditing || !option.value) // Check if any option is unsaved or empty
-    // );
+    const unsavedOrEmptyItems = questionInput.some(
+      (question) =>
+        question.isEditing || // Check if any question is still in editing mode
+        !question.question || // Check if question is empty
+        question.options.some((option) => option.isEditing || !option.value) // Check if any option is unsaved or empty
+    );
 
-    // if (unsavedOrEmptyItems) {
-    //   setError("Please save all changes and ensure no fields are empty before submitting!");
-    //   return;
-    // }
+    if (unsavedOrEmptyItems) {
+      setError("Please save all changes and ensure no fields are empty before submitting!");
+      return;
+    }
 
     try {
       // Submit data logic
@@ -224,7 +224,7 @@ const AdminPanel = () => {
                           onClick={() =>
                             handleOptionSaveToggler(question.id, option.id)
                           }
-                          className="btn-save"
+                          className="btn-option-save"
                         >
                           Save Option
                         </button>
@@ -234,7 +234,7 @@ const AdminPanel = () => {
                           onClick={() =>
                             handleOptionEditToggler(question.id, option.id)
                           }
-                          className="btn-edit"
+                          className="btn-option-edit"
                         >
                           Edit Option
                         </button>
@@ -244,7 +244,7 @@ const AdminPanel = () => {
                       <button
                         type="button"
                         onClick={() => handleDeleteOption(question.id, option.id)}
-                        className="btn-delete"
+                        className="btn-option-delete"
                       >
                         Delete Option
                       </button>

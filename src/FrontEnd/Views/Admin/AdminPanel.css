@@ -7,13 +7,14 @@
 
   /* HTML Body Full ViewPort */
   html, body {
-    height: 100%;
+    min-height: 100vh;
+    /* height: 100%; */
   }
   
   body {
     font-family: Arial, sans-serif;
     /* background-image: url('/public/Gradient-1.jpg'); */
-    background: rgb(12,0,65);
+    /* background: rgb(12,0,65); */
     background: linear-gradient(
     0deg, 
     rgba(12,0,65,1) 0%, 
@@ -24,6 +25,7 @@
     rgba(2,174,230,1) 85%, 
     rgba(0,212,255,1) 100%);
     background-repeat: no-repeat;
+    background-attachment: fixed;
     padding: 20px;
     height: 100%;
   }
@@ -146,22 +148,46 @@
   .option-buttons-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin-top: -20px;
   }
 
+  /* Options button container */
   .option-buttons-container button {
     padding: 6px 10px;
     font-size: 0.62rem;
     margin-left: 10px;
   }
 
+  /* Save button for question */
   .btn-save {
     background-color: #0BDA51;
   }
 
+  
+  /* Delete button for question */
   .btn-delete {
     background-color: #FF3131;
     color: white;
+  }
+
+  
+  /* Delete button for Option */
+  .btn-option-delete {
+    background-color: #FF3131;
+    color: white;
+  }
+  
+  .btn-option-delete:hover {
+    background-color: #FF3131;
+  }
+  
+  /* Save button for Option */
+  .btn-option-save {
+    background-color: #0BDA51;
+  }
+
+  .btn-option-save:hover {
+    background-color: #0BDA51;
   }
   
   button:hover {
@@ -186,6 +212,10 @@
     /* margin: 0 10px; */
 }
 
+ .label {
+  background-color: transparent;
+}
+
   /* Button Add option */
   .btn-add-option {
     background-color: transparent;
@@ -196,6 +226,11 @@
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
     margin: 0 10px;
+  }
+
+  /* AAdd Option Hover Effect */
+  .btn-add-option:hover {
+    background: transparent;
   }
   
   
@@ -230,13 +265,36 @@
     button {
       font-size: 14px;
     }
+
+    /* Add option Button */
     .btn-add-option {
         font-size: 18px;
       }
 
-    .btn-add-option:hover {
-      background: transparent;
-    }
+      /* Save button for option */
+      .btn-option-save{
+        width: 12vh;
+      }
+
+      /* Delete button for option */
+      .btn-option-delete{
+        width: 12vh;
+      }
+
+      /* Save button for question */
+      .btn-save {
+        width: 20vh;
+      }
+
+      /* Delete button for question */
+      .btn-delete {
+        width: 20vh;
+      }
+
+      /* Add option button for option */
+      .btn-add-option:hover {
+        background: transparent;
+      }
     
       .btn-add-option:before,
       .btn-add-option:after {
