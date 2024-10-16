@@ -4,7 +4,9 @@ import Questions from "../../Components/Questions/questions";
 const User = () => {
   return (
     <>
-      <Questions />
+      <div className="user-main-container">
+        <Questions />
+      </div>
     </>
   );
 };

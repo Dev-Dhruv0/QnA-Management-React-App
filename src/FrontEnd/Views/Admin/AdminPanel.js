@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "../Admin/AdminPanel.css";
 import InputLabelField from "../../Components/InputLabelField/InputLabelField";
@@ -137,6 +137,24 @@ const AdminPanel = () => {
         );
   };
 
+  // Handle Correct Option Toggler 
+  const handleCorrectOptionToggle = (questionId, optionId) => {
+    setQuestionInput((prevState) =>
+      prevState.map((question) => 
+        question.id === questionId
+    ? {
+      ...question,
+      options: question.options.map((option) => 
+        option.id === optionId
+      ? { ...option,  is_correct: !option.is_correct}
+      : option
+      ),
+    }
+    : question
+      )
+    );
+  };
+
   // Handle Input question change
   const handleInputQuestionChange = (e, questionId) => {
     const { name, value } = e.target;
@@ -165,6 +183,7 @@ const AdminPanel = () => {
     );
 
     if (unsavedOrEmptyItems) {
+      console.log("Called Error (at Line: 168)");
       setError("Please save all changes and ensure no fields are empty before submitting!");
       return;
     }
@@ -174,21 +193,32 @@ const AdminPanel = () => {
       const payload = questionInput.map((question) => ({
         question: question.question,
         options: question.options.map((option) => ({
-          value: option.value,
+          option_text: option.value,
+          is_correct: option.is_correct || false,
         })),
       }));
-      await axios.post("http://localhost:5000/api/questions", payload);
+
+      console.log("Payload being sent: ", JSON.stringify(payload, null, 2));
+      await axios.post("http://localhost:5000/api/admin/questions", payload);
       console.log("Questions Submitted Successfully");
       setError(""); // Clear any previous error
     } catch (error) {
       console.error("Error Submitting the question", error);
+      if (error.response) {
+        console.log("Server responded with error: ", error.response.data);
+      } else if (error.request){
+        console.log("No response reveived: ", error.request);
+      } else {
+        console.log("Error in requeest setup: ", error.message);
+      }
       setError("An error occurred while submitting the questions.");
     }
   };
 
   return (
     <>
-      {error && <p className="error-message">{error}</p>} {/* Display error messages */}
+  {error && <p className="error-message">{error}</p>} {/* Display error messages */}
+    <div className="admin-container">
       <div className="container">
         <div className="form-container">
           <form onSubmit={handleSubmit} className="my-form">
@@ -215,6 +245,16 @@ const AdminPanel = () => {
                       // disabled={!option.isEditing}
                       isEditing={option.isEditing}
                     />
+
+                    {/* Checkbox for marking the option as correct */}
+                    <label>
+                      <input 
+                      type="checkbox"  
+                      checked = {option.is_correct || false}
+                      onChange={() => handleCorrectOptionToggle(question.id, option.id)}
+                      />
+                      Mark as Correct
+                    </label>
 
                     {/* Edit/Save toggler button for each option */}
                     <div className="option-buttons-container">
@@ -312,6 +352,7 @@ const AdminPanel = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </>
   );

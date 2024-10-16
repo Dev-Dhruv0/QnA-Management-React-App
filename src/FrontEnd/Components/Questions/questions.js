@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import 'A:/G_Square/Small Projects/app-quiz/src/FrontEnd/Views/User/userEnd.css';
 
 const Questions = () => {
     const [questions, setQuestions] = useState([]);
