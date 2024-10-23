@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "../Admin/AdminPanel.css";
 import InputLabelField from "../../Components/InputLabelField/InputLabelField";
@@ -23,13 +23,13 @@ const AdminPanel = () => {
 
   // Toggle question editing state
   const handleEditToggler = (questionId) => {
-    setQuestionInput((prevState) => 
+    setQuestionInput((prevState) =>
       prevState.map((question) =>
         question.id === questionId ? { ...question, isEditing: true } : question
       )
     );
   };
-  
+
   // Add new question
   const handleAddQuestionInput = () => {
     setQuestionInput([
@@ -49,11 +49,12 @@ const AdminPanel = () => {
   const handleQuestionSaveToggler = (questionId) => {
     setQuestionInput((prevState) =>
       prevState.map((question) =>
-        question.id === questionId ? { ...question, isEditing: false } : question
+        question.id === questionId
+          ? { ...question, isEditing: false }
+          : question
       )
     );
   };
-
 
   // Add new option to a question
   const handleAddOption = (questionId) => {
@@ -98,7 +99,7 @@ const AdminPanel = () => {
           ? {
               ...question,
               options: question.options.map((option) =>
-              option.id === optionId ? { ...option, isEditing: true } : option
+                option.id === optionId ? { ...option, isEditing: true } : option
               ),
             }
           : question
@@ -114,7 +115,9 @@ const AdminPanel = () => {
           ? {
               ...question,
               options: question.options.map((option) =>
-                option.id === optionId ? { ...option, isEditing: false } : option
+                option.id === optionId
+                  ? { ...option, isEditing: false }
+                  : option
               ),
             }
           : question
@@ -124,33 +127,35 @@ const AdminPanel = () => {
 
   // Delete option from a question
   const handleDeleteOption = (questionId, optionId) => {
-    console.log("Option Deleted", optionId)
+    console.log("Option Deleted", optionId);
     setQuestionInput(
       questionInput.map((question) =>
         question.id === questionId
           ? {
               ...question,
-              options: question.options.filter((option) => option.id !== optionId),
+              options: question.options.filter(
+                (option) => option.id !== optionId
+              ),
             }
-            : question
-          )
-        );
+          : question
+      )
+    );
   };
 
-  // Handle Correct Option Toggler 
+  // Handle Correct Option Toggler
   const handleCorrectOptionToggle = (questionId, optionId) => {
     setQuestionInput((prevState) =>
-      prevState.map((question) => 
+      prevState.map((question) =>
         question.id === questionId
-    ? {
-      ...question,
-      options: question.options.map((option) => 
-        option.id === optionId
-      ? { ...option,  is_correct: !option.is_correct}
-      : option
-      ),
-    }
-    : question
+          ? {
+              ...question,
+              options: question.options.map((option) =>
+                option.id === optionId
+                  ? { ...option, is_correct: !option.is_correct }
+                  : option
+              ),
+            }
+          : question
       )
     );
   };
@@ -167,7 +172,9 @@ const AdminPanel = () => {
 
   // Delete Question Element
   const handleDeleteQuestionInput = (questionId) => {
-    setQuestionInput(questionInput.filter((question) => question.id !== questionId));
+    setQuestionInput(
+      questionInput.filter((question) => question.id !== questionId)
+    );
   };
 
   // Form submission handler
@@ -184,7 +191,9 @@ const AdminPanel = () => {
 
     if (unsavedOrEmptyItems) {
       console.log("Called Error (at Line: 168)");
-      setError("Please save all changes and ensure no fields are empty before submitting!");
+      setError(
+        "Please save all changes and ensure no fields are empty before submitting!"
+      );
       return;
     }
 
@@ -206,7 +215,7 @@ const AdminPanel = () => {
       console.error("Error Submitting the question", error);
       if (error.response) {
         console.log("Server responded with error: ", error.response.data);
-      } else if (error.request){
+      } else if (error.request) {
         console.log("No response reveived: ", error.request);
       } else {
         console.log("Error in requeest setup: ", error.message);
@@ -217,142 +226,152 @@ const AdminPanel = () => {
 
   return (
     <>
-  {error && <p className="error-message">{error}</p>} {/* Display error messages */}
-    <div className="admin-container">
-      <div className="container">
-        <div className="form-container">
-          <form onSubmit={handleSubmit} className="my-form">
-            {questionInput.map((question, index) => (
-              <div key={question.id} className="form-group">
-                <InputLabelField
-                  label={`Question ${index + 1}`}
-                  name="question"
-                  value={question.question}
-                  onChange={(e) => handleInputQuestionChange(e, question.id)}
-                  // disabled={!question.isEditing}
-                  isEditing={question.isEditing}
-                />
+      {error && <p className="error-message">{error}</p>}{" "}
+      {/* Display error messages */}
+      <div className="admin-container">
+        <div className="container">
+          <div className="form-container">
+            <form onSubmit={handleSubmit} className="my-form">
+              {questionInput.map((question, index) => (
+                <div key={question.id} className="form-group">
+                  <InputLabelField
+                    label={`Question ${index + 1}`}
+                    name="question"
+                    value={question.question}
+                    onChange={(e) => handleInputQuestionChange(e, question.id)}
+                    // disabled={!question.isEditing}
+                    isEditing={question.isEditing}
+                  />
 
-                {question.options.map((option, optionIndex) => (
-                  <div key={option.id} className="form-group">
-                    <InputLabelField
-                      label={`Option ${optionIndex + 1}`}
-                      name={`option-${optionIndex}`}
-                      value={option.value}
-                      onChange={(e) =>
-                        handleOptionChange(e, question.id, option.id)
-                      }
-                      // disabled={!option.isEditing}
-                      isEditing={option.isEditing}
-                    />
+                  <div className="options-input-field">
+                    {question.options.map((option, optionIndex) => (
+                      <div key={option.id} className="form-group">
+                        <div className="form-div">
+                          <InputLabelField
+                            label={`Option ${optionIndex + 1}`}
+                            name={`option-${optionIndex}`}
+                            value={option.value}
+                            onChange={(e) =>
+                              handleOptionChange(e, question.id, option.id)
+                            }
+                            // disabled={!option.isEditing}
+                            isEditing={option.isEditing}
+                          />
+                        
+                        <div className="option-buttons-container">
+                          {option.isEditing ? (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleOptionSaveToggler(question.id, option.id)
+                              }
+                              className="btn-option-save"
+                            >
+                              Save Option
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleOptionEditToggler(question.id, option.id)
+                              }
+                              className="btn-option-edit"
+                            >
+                              Edit Option
+                            </button>
+                          )}
 
-                    {/* Checkbox for marking the option as correct */}
-                    <label>
-                      <input 
-                      type="checkbox"  
-                      checked = {option.is_correct || false}
-                      onChange={() => handleCorrectOptionToggle(question.id, option.id)}
-                      />
-                      Mark as Correct
-                    </label>
+                          {/* Delete Option button */}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleDeleteOption(question.id, option.id)
+                            }
+                            className="btn-option-delete"
+                          >
+                            Delete Option
+                          </button>
+                        </div>
+                      </div>
 
-                    {/* Edit/Save toggler button for each option */}
-                    <div className="option-buttons-container">
-                      {option.isEditing ? (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleOptionSaveToggler(question.id, option.id)
+                      {/* Checkbox for marking the option as correct */}
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={option.is_correct || false}
+                          onChange={() =>
+                            handleCorrectOptionToggle(question.id, option.id)
                           }
-                          className="btn-option-save"
-                        >
-                          Save Option
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleOptionEditToggler(question.id, option.id)
-                          }
-                          className="btn-option-edit"
-                        >
-                          Edit Option
-                        </button>
-                      )}
+                        />
+                        Mark as Correct
+                      </label>
 
-                      {/* Delete Option button */}
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteOption(question.id, option.id)}
-                        className="btn-option-delete"
-                      >
-                        Delete Option
-                      </button>
+                      {/* Edit/Save toggler button for each option */}
                     </div>
-                  </div>
-                ))}
-
-                {/* Add Option button */}
-                <div className="add-option-container">
-                  <div className="add-option-line"></div>
-                  <button
-                    type="button"
-                    onClick={() => handleAddOption(question.id)}
-                    className="btn-add-option"
-                  >
-                    <i className="fas fa-plus"></i>
-                  </button>
-                  <div className="add-option-line"></div>
+                  ))}
                 </div>
 
-                {/* Edit/Save toggler button for question */}
-                {question.isEditing ? (
-                  <button
-                    type="button"
-                    onClick={() => handleQuestionSaveToggler(question.id)}
-                    className="btn-save"
-                  >
-                    Save Question
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => handleEditToggler(question.id)}
-                    className="btn-edit"
-                  >
-                    Edit Question
-                  </button>
-                )}
+                  {/* Add Option button */}
+                  <div className="add-option-container">
+                    <div className="add-option-line"></div>
+                    <button
+                      type="button"
+                      onClick={() => handleAddOption(question.id)}
+                      className="btn-add-option"
+                    >
+                      <i className="fas fa-plus"></i>
+                    </button>
+                    <div className="add-option-line"></div>
+                  </div>
 
-                {/* Delete Question button */}
-                <button
-                  type="button"
-                  onClick={() => handleDeleteQuestionInput(question.id)}
-                  className="btn-delete"
-                >
-                  Delete Question
+                  {/* Edit/Save toggler button for question */}
+                  {question.isEditing ? (
+                    <button
+                      type="button"
+                      onClick={() => handleQuestionSaveToggler(question.id)}
+                      className="btn-save"
+                    >
+                      Save Question
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleEditToggler(question.id)}
+                      className="btn-edit"
+                    >
+                      Edit Question
+                    </button>
+                  )}
+
+                  {/* Delete Question button */}
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteQuestionInput(question.id)}
+                    className="btn-delete"
+                  >
+                    Delete Question
+                  </button>
+                </div>
+              ))}
+
+              {/* Add New Question */}
+              <button
+                type="button"
+                onClick={handleAddQuestionInput}
+                className="btn-add"
+              >
+                Add Question
+              </button>
+
+              {/* Submit button */}
+              <div className="btn-group">
+                <button type="submit" className="btn-submit">
+                  Submit
                 </button>
               </div>
-            ))}
-
-            {/* Add New Question */}
-            <button
-              type="button"
-              onClick={handleAddQuestionInput}
-              className="btn-add"
-            >
-              Add Question
-            </button>
-
-            {/* Submit button */}
-            <div className="btn-group">
-              <button type="submit" className="btn-submit">
-                Submit
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
     </>
   );

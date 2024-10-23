@@ -76,6 +76,7 @@ body {
 
 /* Input Fields */
 .form-input {
+  position: relative;
   height: 50px;
   width: 100%;
   padding: 12px 10px;
@@ -156,18 +157,27 @@ button {
   filter: none;
 }
 
+.form-div {
+  flex: row;
+
+}
+
 /* Button Group - Save/Delete Buttons */
 .option-buttons-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -20px;
+  /* position: absolute; */
+  /* display: flex; */
+  /* justify-content: flex-end; */
+  /* margin-top: -20px; */
+  /* top: 7.5rem; */
+  /* right: 9vw; */
 }
 
 /* Options button container */
 .option-buttons-container button {
-  padding: 6px 10px;
+  /* padding: 6px 10px;
   font-size: 0.62rem;
   margin-left: 10px;
+  width: 12vh; */
 }
 
 /* Save button for question */
@@ -183,6 +193,7 @@ button {
 
 /* Delete button for Option */
 .btn-option-delete {
+  /* position: absolute; */
   background-color: #FF3131;
   color: white;
 }
@@ -193,6 +204,17 @@ button {
 
 /* Save button for Option */
 .btn-option-save {
+  /* position: absolute;
+  top: 0vh;
+  right: 0vw; */
+  background-color: #0BDA51;
+}
+
+/* Edit button for Option */
+.btn-option-edit {
+  /* position: absolute;
+  top: 0vh;
+  right: 0vw; */
   background-color: #0BDA51;
 }
 
@@ -270,7 +292,13 @@ button:hover {
   }
 
   button {
-      font-size: 14px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;
   }
 
   /* Add option Button */
@@ -280,12 +308,22 @@ button:hover {
 
   /* Save button for option */
   .btn-option-save {
-      width: 12vh;
+      top: -0.2rem;
+      right: 3rem;
+      width: 12vw;
   }
 
+  /* Edit button for option */
+  .btn-option-edit {
+    top: -0.2rem;
+    right: 3rem;
+    width: 12vw;
+}
   /* Delete button for option */
   .btn-option-delete {
-      width: 12vh;
+      top: -0.2rem;
+      right: -3rem;
+      width: 12vw;
   }
 
   /* Save button for question */
