@@ -20,6 +20,7 @@ const AdminPanel = () => {
 
   // Error Messages Handler
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
   // Toggle question editing state
   const handleEditToggler = (questionId) => {
@@ -48,11 +49,34 @@ const AdminPanel = () => {
   // Toggle question save state
   const handleQuestionSaveToggler = (questionId) => {
     setQuestionInput((prevState) =>
-      prevState.map((question) =>
-        question.id === questionId
-          ? { ...question, isEditing: false }
-          : question
-      )
+      prevState.map((question) => {
+        if (question.id === questionId) {
+          if (!question.question.trim()) {
+            setErrors((prevErrors) => ({
+              ...prevErrors, 
+              [questionId]: "Question Cannot be empty!",
+            }));
+            return question;
+          }
+
+          if (question.options.length === 0)
+          {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              [questionId]: "At least one option is required!",
+            }));
+            return question;
+          }
+
+          setErrors((prevErrors) => {
+            // Clear error for thi question
+            const { [questionId]: _, ...rest } = prevErrors
+            return rest;
+          });
+          return { ...question, isEditing: false };
+        }
+        return question;
+      })
     );
   };
 
@@ -114,11 +138,23 @@ const AdminPanel = () => {
         question.id === questionId
           ? {
               ...question,
-              options: question.options.map((option) =>
-                option.id === optionId
-                  ? { ...option, isEditing: false }
-                  : option
-              ),
+              options: question.options.map((option) => {
+                if (option.id === optionId) {
+                  if (!option.value.trim()) {
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      [`${questionId}-${optionId}`]: "Option cannot be empty!",
+                    }));
+                    return option;
+                  }
+                  setErrors((prevErrors) => {
+                    const { [`${questionId}-${optionId}`]: _, ...rest } = prevErrors;
+                    return rest;
+                  });
+                  return { ...option, isEditing: false };
+                }
+                return option;
+              }),
             }
           : question
       )
@@ -128,17 +164,39 @@ const AdminPanel = () => {
   // Delete option from a question
   const handleDeleteOption = (questionId, optionId) => {
     console.log("Option Deleted", optionId);
-    setQuestionInput(
-      questionInput.map((question) =>
-        question.id === questionId
-          ? {
-              ...question,
-              options: question.options.filter(
-                (option) => option.id !== optionId
-              ),
+    setQuestionInput((prevState) => 
+      prevState.map((question) => {
+        if (question.id === questionId) 
+          {
+            const updatedOptions = question.options.filter(
+              (option) => option.id !== optionId
+            );
+            if (updatedOptions.length === 0)
+            {
+              setErrors((prevErrors) => ({
+                ...prevErrors,
+                [questionId]: "At least one option is required!"
+              }));
+            } else {
+              setErrors((prevErrors) => {
+                const { [questionId]: _, ...rest } = prevErrors;
+                return rest;
+              })
             }
-          : question
-      )
+            return { ...question, options: updatedOptions };
+          }
+          return question;        
+      })
+      // questionInput.map((question) =>
+      //   question.id === questionId
+      //     ? {
+      //         ...question,
+      //         options: question.options.filter(
+      //           (option) => option.id !== optionId
+      //         ),
+      //       }
+      //     : question
+      // )
     );
   };
 
@@ -149,11 +207,10 @@ const AdminPanel = () => {
         question.id === questionId
           ? {
               ...question,
-              options: question.options.map((option) =>
-                option.id === optionId
-                  ? { ...option, is_correct: !option.is_correct }
-                  : option
-              ),
+              options: question.options.map((option) => ({
+                ...option,
+                is_correct: option.id === optionId,
+              })),
             }
           : question
       )
@@ -182,20 +239,20 @@ const AdminPanel = () => {
     e.preventDefault();
 
     // Check for unsaved items or empty fields
-    const unsavedOrEmptyItems = questionInput.some(
-      (question) =>
-        question.isEditing || // Check if any question is still in editing mode
-        !question.question || // Check if question is empty
-        question.options.some((option) => option.isEditing || !option.value) // Check if any option is unsaved or empty
-    );
+    // const unsavedOrEmptyItems = questionInput.some(
+    //   (question) =>
+    //     question.isEditing || // Check if any question is still in editing mode
+    //     !question.question || // Check if question is empty
+    //     question.options.some((option) => option.isEditing || !option.value) // Check if any option is unsaved or empty
+    // );
 
-    if (unsavedOrEmptyItems) {
-      console.log("Called Error (at Line: 168)");
-      setError(
-        "Please save all changes and ensure no fields are empty before submitting!"
-      );
-      return;
-    }
+    // if (unsavedOrEmptyItems) {
+    //   console.log("Called Error");
+    //   setError(
+    //     "Please save all changes and ensure no fields are empty before submitting!"
+    //   );
+    //   return;
+    // }  
 
     try {
       // Submit data logic
@@ -220,7 +277,7 @@ const AdminPanel = () => {
       } else {
         console.log("Error in requeest setup: ", error.message);
       }
-      setError("An error occurred while submitting the questions.");
+      // setError("An error occurred while submitting the questions.");
     }
   };
 
@@ -243,10 +300,30 @@ const AdminPanel = () => {
                     isEditing={question.isEditing}
                   />
 
+                  {/* Display Question Error */}
+                  {errors[question.id] && (
+                    <p className="error-message">{errors[question.id]}</p>
+                  )}
+
+                <div className="input-btn-container">
                   <div className="options-input-field">
                     {question.options.map((option, optionIndex) => (
                       <div key={option.id} className="form-group">
                         <div className="form-div">
+                          <div className="input-wrapper">
+                     {/* Checkbox for marking the option as correct */}
+                      <label className="checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={option.is_correct || false}
+                          onChange={() =>
+                            handleCorrectOptionToggle(question.id, option.id)
+                          }
+                          className="checkbox"
+                        />
+                        <span className="custom-checkbox"></span>
+                      </label>
+
                           <InputLabelField
                             label={`Option ${optionIndex + 1}`}
                             name={`option-${optionIndex}`}
@@ -257,7 +334,8 @@ const AdminPanel = () => {
                             // disabled={!option.isEditing}
                             isEditing={option.isEditing}
                           />
-                        
+
+                      {/* Edit/Save toggler button for each option */}
                         <div className="option-buttons-container">
                           {option.isEditing ? (
                             <button
@@ -267,7 +345,7 @@ const AdminPanel = () => {
                               }
                               className="btn-option-save"
                             >
-                              Save Option
+                              Save
                             </button>
                           ) : (
                             <button
@@ -277,7 +355,7 @@ const AdminPanel = () => {
                               }
                               className="btn-option-edit"
                             >
-                              Edit Option
+                              Edit
                             </button>
                           )}
 
@@ -289,27 +367,21 @@ const AdminPanel = () => {
                             }
                             className="btn-option-delete"
                           >
-                            Delete Option
+                            Delete
                           </button>
                         </div>
+
                       </div>
 
-                      {/* Checkbox for marking the option as correct */}
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={option.is_correct || false}
-                          onChange={() =>
-                            handleCorrectOptionToggle(question.id, option.id)
-                          }
-                        />
-                        Mark as Correct
-                      </label>
-
-                      {/* Edit/Save toggler button for each option */}
+                          {/* Display Option Error */}
+                          {errors[`${question.id}-${option.id}`] && (
+                            <p className="error-message">{errors[`${question.id}-${option.id}`]}</p>
+                          )}
+                      </div>
                     </div>
                   ))}
                 </div>
+              </div>
 
                   {/* Add Option button */}
                   <div className="add-option-container">
@@ -354,6 +426,8 @@ const AdminPanel = () => {
                 </div>
               ))}
 
+              {/* Submit button */}
+              <div className="btn-group">
               {/* Add New Question */}
               <button
                 type="button"
@@ -362,9 +436,6 @@ const AdminPanel = () => {
               >
                 Add Question
               </button>
-
-              {/* Submit button */}
-              <div className="btn-group">
                 <button type="submit" className="btn-submit">
                   Submit
                 </button>

@@ -4,11 +4,11 @@ import AdminPanel from "../Views/Admin/AdminPanel.js";
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/user",
         element: <User />,
     },
     {
-        path: "/admin",
+        path: "/",
         element: <AdminPanel />
     },
 ]);

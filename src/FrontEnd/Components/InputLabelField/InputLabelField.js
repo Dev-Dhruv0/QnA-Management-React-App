@@ -7,7 +7,8 @@ const InputLabelField = ({
     name,
     value,
     onChange,
-    isEditing
+    isEditing,
+    children
 }) => {
     const [isFocused, setIsFocused] = useState(false);
 
@@ -31,6 +32,10 @@ const InputLabelField = ({
             onChange={onChange} 
             disabled={!isEditing} //{isEditing === false ? true : false}
             className="input-field"/>
+
+            <div className='option-buttons-container'> 
+                {children}
+            </div>
 
         </div>
     );

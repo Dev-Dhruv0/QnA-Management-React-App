@@ -6,17 +6,12 @@
 }
 
 html, body {
-  /* min-height: 100vh; */
   height: 100%; 
   margin: 0;
 }
 
 body {
   font-family: Arial, sans-serif;
-  /* background-image: url("/public/08.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed; */
-  /* padding: 20px; */
   height: 100%;
 }
 
@@ -32,15 +27,6 @@ body {
   min-height: 100vh; 
   height: 100%;
   width: 100%;
-  /* background: linear-gradient(
-      0deg, 
-      rgba(12,0,65,1) 0%, 
-      rgba(5,0,87,1) 10%, 
-      rgba(5,0,87,1) 17%, 
-      rgba(9,9,121,1) 29%, 
-      rgba(4,119,194,1) 58%, 
-      rgba(2,174,230,1) 85%, 
-      rgba(0,212,255,1) 100%); */
 }
 
 /* Container Styling */
@@ -102,7 +88,7 @@ body {
 /* Buttons */
 button {
   padding: 10px 15px;
-  border: none;
+  /* border: none; */
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
@@ -110,92 +96,128 @@ button {
   margin-right: 10px;
 }
 
-.btn-add,
 .btn-add-option,
+.btn-option-delete,
+.btn-option-save,
+.btn-option-edit,
+.btn-delete,
 .btn-edit,
-.btn-save,
-.btn-submit {
+.btn-save {
   color: white;
+  border: none;
 }
 
 /* Submit Button Style */
 .btn-submit {
-  background: transparent;
+  /* background: transparent;
+  border: solid 2px black;
   font-size: 16px;
+  width: 100%;
+  color: black; */
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  /* padding: 1em 2em; */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 0 0 black;
 }
 
 /* Submit Button Hover Effect */
 .btn-submit:hover {
-  background: transparent;
+  /* color: black;
+  border: 1px solid black;
+  background-color: white; */
+  background-color: white;
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 black;
 }
+
+.btn-submit:active {
+  transform: translateY(2px) translateX(1px);
+  box-shadow: 0 0 0 0 black;
+};
 
 /* Add question button */
 .btn-add {
-  display: inline-block;
+  /* display: inline-block;
   background-color: transparent;
   color: black;
-  padding: 8px 16px;
   font-size: 14px;
-  border: 2px solid black;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, filter 0.3s ease;
-  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 8rem;
-  height: 40px;
+  width: 100%;
+  height: 40px; */
+  /* background: transparent;
+  border: solid 2px black;
+  font-size: 16px;
+  width: 100%;
+  color: black; */
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 0 0 black;
 }
 
-/* Add Button Hover Effect */
 .btn-add:hover {
-  background-color: transparent; 
+  /* color: black;
+  border: 1px solid black;
+  background-color: white; */
+  background-color: white;
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 black;
 }
 
 .btn-add:active {
-  filter: none;
-}
+transform: translateY(2px) translateX(1px);
+box-shadow: 0 0 0 0 black;
+};
 
 .form-div {
   flex: row;
-
+  position: relative;
+  align-items: center;
 }
 
-/* Button Group - Save/Delete Buttons */
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  width: auto;
+}
+
 .option-buttons-container {
-  /* position: absolute; */
-  /* display: flex; */
-  /* justify-content: flex-end; */
-  /* margin-top: -20px; */
-  /* top: 7.5rem; */
-  /* right: 9vw; */
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(5%);
+  display: flex;
+  gap: 5px;
 }
 
-/* Options button container */
-.option-buttons-container button {
-  /* padding: 6px 10px;
-  font-size: 0.62rem;
-  margin-left: 10px;
-  width: 12vh; */
-}
-
-/* Save button for question */
-.btn-save {
-  background-color: #0BDA51;
-}
-
-/* Delete button for question */
-.btn-delete {
-  background-color: #FF3131;
-  color: white;
+.options-input-field {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 /* Delete button for Option */
 .btn-option-delete {
-  /* position: absolute; */
+  height: 5vh;
+  width: 5vw;
   background-color: #FF3131;
-  color: white;
+  color: white; 
 }
 
 .btn-option-delete:hover {
@@ -204,17 +226,25 @@ button {
 
 /* Save button for Option */
 .btn-option-save {
-  /* position: absolute;
-  top: 0vh;
-  right: 0vw; */
+  height: 5vh;
+  width: 5vw;
+  /* padding: 5px 10px; */
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  /* font-size: 14px; */
+  color: #fff;
   background-color: #0BDA51;
 }
 
 /* Edit button for Option */
 .btn-option-edit {
-  /* position: absolute;
-  top: 0vh;
-  right: 0vw; */
+  height: 5vh;
+  width: 5vw;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #fff;
   background-color: #0BDA51;
 }
 
@@ -222,8 +252,37 @@ button {
   background-color: #0BDA51;
 }
 
+/* Save button for question */
+.btn-save {
+  height: 5vh;
+  width: 20vh;
+  background-color: #0BDA51;
+}
+
+/* Edit button for question */
+.btn-edit {
+  height: 5vh;
+  width: 20vh;
+  background-color: #0BDA51;
+}
+
+/* Delete button for question */
+.btn-delete {
+  height: 5vh;
+  width: 20vh;
+  background-color: #FF3131;
+  color: white;
+}
+
 button:hover {
   opacity: 0.8;
+}
+
+.input-btn-container {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  /* border: solid 0.5px; */
 }
 
 /* Add Option container */
@@ -246,6 +305,54 @@ button:hover {
   background-color: transparent;
 }
 
+/* Checkbox Input Styling */
+.checkbox {
+  display: none;
+}
+
+/* Styled Option Checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  padding: 10px ;
+  margin-left: -20px;
+  cursor: pointer;
+}
+
+.checkbox-label:hover .custom-checkbox {
+  border-color: #0056b3;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  position: relative; 
+  background-color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease ;
+}
+
+/* Checkbox Checked State */
+.checkbox:checked + .custom-checkbox {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.checkbox:checked + .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 4px;
+  height: 9.5px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
 /* Button Add option */
 .btn-add-option {
   background-color: transparent;
@@ -266,15 +373,21 @@ button:hover {
 /* Button Group */
 .btn-group {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 10px;
   margin-top: 20px;
 }
 
 /* Error Message */
 .error-message {
+  display: flex;
   color: red;
   font-size: 14px;
+  padding-left: 10px;
+  margin-top: -15px;
   margin-bottom: 10px;
+  align-items: flex-start;
 }
 
 /* Responsive Design */
@@ -289,16 +402,6 @@ button:hover {
 
   .form-input {
       font-size: 14px;
-  }
-
-  button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
   }
 
   /* Add option Button */
@@ -324,11 +427,6 @@ button:hover {
       top: -0.2rem;
       right: -3rem;
       width: 12vw;
-  }
-
-  /* Save button for question */
-  .btn-save {
-      width: 20vh;
   }
 
   /* Delete button for question */
