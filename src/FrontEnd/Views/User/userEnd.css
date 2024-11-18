@@ -10,40 +10,44 @@ body {
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background-image: url("/public/08.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: white;
+    /* background-image: url("/public/08.jpg"); */
+    /* background-repeat: no-repeat; */
+    /* background-attachment: fixed; */
 }
 
 /* Container for the entire User Interface */
-.user-container {
+/* .user-container {
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 90vh;
-    text-align: center;   
-    padding: 20px;
-}
+    width: 100%;
+    padding: 1rem;
+} */
+
+/* Container for Questions and Options */
+/* .Qna-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    width: 80%;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
 
 /* Title Styling */
-h2 {
+/* h2 {
     color: #2c3e50; 
     margin-bottom: 20px;
     font-weight: 600;
     font-size: 2rem;
-}
-
-/* Container for Questions and Options */
-.Qna-container {
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px); /* Keep blurred effect */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
-    border-radius: 10px;
-    padding: 30px;
-    max-width: 700px;
-    width: 100%;
-}
+} */
 
 /* Question Block Styling */
 .question-block {
@@ -78,10 +82,12 @@ input[type="radio"] {
 }
 
 /* Option Hover Effect */
-/* label:hover {
-    background-color: rgba(255, 255, 255, 0.4); 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-} */
+/* Option Hover Effect */
+label:hover {
+    background-color: rgba(91, 91, 91, 0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
 
 /* Active Option Styling */
 input[type="radio"]:checked + label {

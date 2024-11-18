@@ -323,9 +323,9 @@ const AdminPanel = () => {
       {/* Display error messages */}
       <div className="admin-container flex flex-row justify-center items-center min-h-screen  w-full bg-[url('/public/08.jpg')] bg-no-repeat bg-fixed">
         <div className="flex justify-center items-start space-x-5 p-5">
-          <div className="container-one flex justify-center items-start space-x-5 w-full bg-white/30 p-5 rounded-lg shadow-lg backdrop-blur-md">
+          {/* <div className="container-one flex justify-center items-start space-x-5 w-full bg-white/30 p-5 rounded-lg shadow-lg backdrop-blur-md">
           First Container
-          </div>
+          </div> */}
 
           {/* Second container */}
           <div className="container flex justify-center items-start w-full bg-white/30 p-3 rounded-lg shadow-lg backdrop-blur-md">

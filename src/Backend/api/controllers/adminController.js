@@ -16,7 +16,7 @@ const AdminController = {
                     return res.status(400).json({ error: "Question and Options are required!" });
                 }
                 const [result] = await db.query("INSERT INTO tbl_questions (question) VALUES(?)", [question]);
-                console.log("Question Inserted wih result: ", result);
+                // console.log("Question Inserted wih result: ", result);
                 const questionId = result.insertId;
 
                 for (const option of options)
@@ -27,7 +27,7 @@ const AdminController = {
                         console.log("Error Inserting Option", option.option_text, error);
                         throw new Error(`Failed to insert option: ${option.option_text}`);
                     }
-                    console.log("Options Inserted Successfully!", option.value);
+                    console.log("Options Inserted Successfully!");
                 }
 
                 // await Promise.all(optionPromises);

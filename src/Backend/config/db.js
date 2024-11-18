@@ -5,8 +5,7 @@ const db = mysql.createPool({
     user: "root",
     database: "db_QnA",
     password: "MySQLServer@123",
-    port: "3306",
-    // waitForConnection: true,
+    port: 3306,
     queueLimit: 0
 });
 

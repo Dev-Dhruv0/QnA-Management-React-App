@@ -8,7 +8,8 @@ userName CHAR(50),
 email VARCHAR(50)
 );
 INSERT INTO tbl_user(user_id, userName, email) VALUES (1, "Dhruv", "officialdhruv0004@gmail.com");
-
+ALTER TABLE tbl_user ADD password VARCHAR(255);
+ 
 SELECT *FROM tbl_user;
 
 --  Questions Table 02
@@ -19,25 +20,30 @@ FOREIGN KEY (user_id) REFERENCES tbl_user(user_id) ON DELETE CASCADE,
 question VARCHAR(100)
 );
 
+ALTER TABLE tbl_questions MODIFY COLUMN question VARCHAR(255);
+INSERT INTO tbl_questions(user_id, question) VALUES (1, "Sample question?");
+
+
 SELECT *FROM tbl_questions;
-TRUNCATE tbl_questions;
+-- TRUNCATE tbl_questions; 
 DESCRIBE tbl_questions;
+SHOW CREATE TABLE tbl_questions;
 
 -- Drop Foreign key constraint -- 
-ALTER TABLE tbl_questions
-DROP FOREIGN KEY tbl_questions_ibfk_1;
+-- ALTER TABLE tbl_questions
+-- DROP FOREIGN KEY tbl_questions_ibfk_1;
 
 -- Drop user_id Column --
-ALTER TABLE tbl_questions
-DROP COLUMN user_id;
+-- ALTER TABLE tbl_questions
+-- DROP COLUMN user_id;
 
 -- DROP Foreign Key Constraint
-ALTER TABLE tbl_questions
-DROP FOREIGN KEY tbl_questions_ibfk_1;
+-- ALTER TABLE tbl_questions
+-- DROP FOREIGN KEY tbl_questions_ibfk_1;
 
 -- Drop user_id Column 
-ALTER TABLE tbl_questions
-DROP COLUMN user_id;
+-- ALTER TABLE tbl_questions
+-- DROP COLUMN user_id;
 
 -- To get Constraints
 SHOW CREATE TABLE tbl_questions;
@@ -53,7 +59,9 @@ FOREIGN KEY (ques_id) REFERENCES tbl_questions(ques_id) ON DELETE CASCADE,
 is_correct BOOLEAN
 );
 SELECT *FROM tbl_options;
-TRUNCATE tbl_options;
+SELECT * FROM tbl_options WHERE option_id = selected_option_id AND ques_id = question_id;
+
+-- TRUNCATE tbl_options;
 
 -- User Submission Table 04
 CREATE TABLE tbl_userSubmission (
@@ -75,6 +83,19 @@ selected_option_id INT,
 FOREIGN KEY (selected_option_id) REFERENCES tbl_options(option_id) ON DELETE CASCADE,
 is_correct BOOLEAN
 );
-
 SELECT *FROM tbl_user_answers;
+
+
+-- Disable foreign key checks
+-- SET FOREIGN_KEY_CHECKS = 0;
+
+-- Truncate the tables
+-- TRUNCATE TABLE tbl_user_answers;
+-- TRUNCATE TABLE tbl_userSubmission;
+-- TRUNCATE TABLE tbl_options;
+-- TRUNCATE TABLE tbl_questions;
+-- TRUNCATE TABLE tbl_user;
+
+-- Re-enable foreign key checks
+-- SET FOREIGN_KEY_CHECKS = 1;
 
